@@ -1,0 +1,4 @@
+the markdown plugin in cksource.com bundles is not up to date, it really is 
+the best idea to grab the ckeditor standard bundle from cksource and the
+markdown plugin directly from github: 
+https://github.com/hectorguo/CKEditor-Markdown-Plugin/
