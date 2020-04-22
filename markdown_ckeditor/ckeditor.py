@@ -20,10 +20,11 @@ except ImportError:
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
+from wiki.core.compat import BuildAttrsCompat
 from wiki.editors.base import BaseEditor
 
 
-class CKEditorWidget(forms.Widget):
+class CKEditorWidget(BuildAttrsCompat,forms.Widget):
 
     class Media:
         css = {
@@ -44,10 +45,10 @@ class CKEditorWidget(forms.Widget):
             default_attrs.update(attrs)
         super(CKEditorWidget, self).__init__(default_attrs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
-        final_attrs = self.build_attrs(attrs, name=name)
+        final_attrs = self.build_attrs_compat(attrs, name=name)
         return mark_safe(
             '<div><textarea%s>%s</textarea></div>' %
             (flatatt(final_attrs),

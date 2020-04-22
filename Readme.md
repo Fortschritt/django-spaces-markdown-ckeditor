@@ -1,3 +1,5 @@
+## Markdown CKEditor for Django Collab Wiki
+
 ## DIRTY THINGS
 this includes a copy of markdown_ckeditor, instead of loading it during installation or something similar
 
