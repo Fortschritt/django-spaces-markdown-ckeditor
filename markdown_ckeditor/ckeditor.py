@@ -1,8 +1,9 @@
 # -*- coding: utf-8
 from __future__ import unicode_literals
 from __future__ import absolute_import
+
 from django import forms
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 # Due to deprecation of django.forms.util in Django 1.9
 try:
@@ -20,19 +21,12 @@ except ImportError:
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
-from wiki.core.compat import BuildAttrsCompat
 from wiki.editors.base import BaseEditor
 
 
-class CKEditorWidget(BuildAttrsCompat,forms.Widget):
+class CKEditorWidget(forms.Widget):
+    template_name = "wiki/forms/ckeditor.html"
 
-    class Media:
-        css = {
-            'all': ()
-        }
-        js = ("markdown_ckeditor/ckeditor/ckeditor.js",
-              "collab_links/js/collab_links.js",
-             )
 
     def __init__(self, attrs=None):
         # The 'rows' and 'cols' attributes are required for HTML correctness.
@@ -45,6 +39,16 @@ class CKEditorWidget(BuildAttrsCompat,forms.Widget):
             default_attrs.update(attrs)
         super(CKEditorWidget, self).__init__(default_attrs)
 
+    class Media:
+        css = {
+            'all': ()
+        }
+        js = ("markdown_ckeditor/ckeditor/ckeditor.js",
+              "collab_links/js/collab_links.js",
+             )
+
+
+    """
     def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             value = ''
@@ -54,7 +58,7 @@ class CKEditorWidget(BuildAttrsCompat,forms.Widget):
             (flatatt(final_attrs),
              conditional_escape(
                 force_unicode(value))))
-
+    """
 
 class CKEditor(BaseEditor):
     editor_id = 'ckeditor'
